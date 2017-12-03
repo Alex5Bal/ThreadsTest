@@ -1,4 +1,4 @@
-all: dep-wd-race dep-wd-ok transfer-bad 
+all: dep-wd-race dep-wd-ok transfer-bad transfer-good
 
 .PHONY: clean all		#declare these targets as phony
 
