@@ -1,13 +1,15 @@
-all:
-	(cd tthreads ; make install)
-	(cd bank; make)
-	(cd demo-threads; make)
+all: dep-wd-race dep-wd-ok transfer-bad 
 
-
-.PHONY: clean all 
+.PHONY: clean all		#declare these targets as phony
 
 clean:
-	(cd tthreads ; make clean)
-	(cd bank; make clean)
-	(cd demo-threads; make clean)
-	rm -rf h lib
+	rm -f *.o *.exe *stackdump dep-wd-race dep-wd-ok transfer-bad transfer-good
+
+CFLAGS=-g -O1 -fno-ipa-sra -L../lib -I../h
+
+# include files (forces recompile if changed)
+
+dep-wd-race: dep-wd-race.o ../lib/tthreads.a
+dep-wd-ok:  dep-wd-ok.o ../lib/tthreads.a
+transfer-bad:  transfer-bad.o ../lib/tthreads.a
+transfer-good: transfer-good.o ../lib/tthreads.a
