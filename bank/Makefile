@@ -13,4 +13,4 @@ dep-wd-race: dep-wd-race.o ../lib/tthreads.a
 dep-wd-ok:  dep-wd-ok.o ../lib/tthreads.a
 transfer-bad:  transfer-bad.o ../lib/tthreads.a
 transfer-good: transfer-good.o ../lib/tthreads.a
-PCTestV1: PCTestV1.o ..lib/tthreads.a
+PCTestV1: PCTestV1.o ../lib/tthreads.a
