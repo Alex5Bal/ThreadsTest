@@ -27,7 +27,7 @@ int get()
     
 }
 
-mutexInit(mutex, max);
+mutexInit(&mutex, max);
 
 void *producer(void *arg)
 {
