@@ -4,7 +4,7 @@
 #include "mutex.h"
 
 int buffer[10];
-int max = 10
+int max = 10;
 int fill = 0;
 int use = 0;
 int count = 0;
