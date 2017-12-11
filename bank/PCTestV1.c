@@ -3,58 +3,68 @@
 #include "stdio.h"
 #include "mutex.h"
 
-int buffer;
+int MAX = 10;
+int buffer[MAX];
+int fill = 0;
+int use = 0;
 int count = 0;
+int loops = 99;
+Mutex mutex;
 
 void put(int value)
 {
-    if(count == 0)
-    {
-        count = 1;
-        buffer = value;
-    }
+    buffer[fill] = value;
+    fill = (fill + 1) % MAX;
+    count++;
 }
 
 int get()
 {
-    if(count == 1)
-    {
-        count = 0;
-        return buffer;
-    }
-    return 0;
+    int temp = buffer[use];
+    use = (use + 1) % MAX;
+    count--;
+    return temp;
     
 }
+
+mutexInit(mutex, MAX);
 
 void *producer(void *arg)
 {
     int i;
-    int loops = (int) arg;
-    
-    for(int i = 0; i < loops; i++)
-    {
-        put(i);
+    for (i = 0; i < loops; i++) {
+    	mutexLock(mutex);
+    	while (count == MAX)
+    		yield();
+    	put(i);
+    	mutexUnlock(mutex);
     }
 }
 
 void *consumer(void *arg)
 {
-    while(1)
-    {
-        int tmp = get();
-        printf("%d\n", tmp);
+    int i;
+    for (i = 0; i < loops; i++) {
+    	mutexLock(mutex);
+    	while (count == 0)
+    		yield();
+    	int temp = get();
+    	mutexUnlock(mutex);
     }
 }
 
 int main()
 {
-    int numThreads = 2;
+    int numThreads = 5;
     int loopCount = 10;
     
     makeThreads(numThreads);
     
-    createThread((void (*)(void *))producer, &loopCount);
-    createThread((void (*)(void *))consumer, &loopCount);
+    createThread((void (*)(void *))producer, NULL);
+    createThread((void (*)(void *))producer, NULL);
+    createThread((void (*)(void *))producer, NULL);
+    createThread((void (*)(void *))producer, NULL);
+    createThread((void (*)(void *))consumer, NULL);
     
     startThreads();
     
