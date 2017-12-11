@@ -33,11 +33,11 @@ void *producer(void *arg)
 {
     int i;
     for (i = 0; i < loops; i++) {
-    	mutexLock(mutex);
+    	mutexLock(&mutex);
     	while (count == MAX)
     		yield();
     	put(i);
-    	mutexUnlock(mutex);
+    	mutexUnlock(&mutex);
     }
 }
 
@@ -45,11 +45,11 @@ void *consumer(void *arg)
 {
     int i;
     for (i = 0; i < loops; i++) {
-    	mutexLock(mutex);
+    	mutexLock(&mutex);
     	while (count == 0)
     		yield();
     	int temp = get();
-    	mutexUnlock(mutex);
+    	mutexUnlock(&mutex);
     }
 }
 
