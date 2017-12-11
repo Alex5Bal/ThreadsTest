@@ -3,9 +3,10 @@
 #include "stdio.h"
 #include "mutex.h"
 
-#define MAX 10;
+#define MAX = 10;
 
 int buffer[MAX];
+int max = 10
 int fill = 0;
 int use = 0;
 int count = 0;
@@ -15,27 +16,27 @@ Mutex mutex;
 void put(int value)
 {
     buffer[fill] = value;
-    fill = (fill + 1) % MAX;
+    fill = (fill + 1) % max;
     count++;
 }
 
 int get()
 {
     int temp = buffer[use];
-    use = (use + 1) % MAX;
+    use = (use + 1) % max;
     count--;
     return temp;
     
 }
 
-mutexInit(mutex, MAX);
+mutexInit(mutex, max);
 
 void *producer(void *arg)
 {
     int i;
     for (i = 0; i < loops; i++) {
     	mutexLock(&mutex);
-    	while (count == MAX)
+    	while (count == max)
     		yield();
     	put(i);
     	mutexUnlock(&mutex);
