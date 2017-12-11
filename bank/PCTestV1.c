@@ -3,7 +3,8 @@
 #include "stdio.h"
 #include "mutex.h"
 
-int MAX = 10;
+#define MAX 10;
+
 int buffer[MAX];
 int fill = 0;
 int use = 0;
