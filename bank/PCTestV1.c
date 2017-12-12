@@ -48,7 +48,7 @@ void *consumer(void *arg)
     	while (count == 0)
     		yield();
     	int temp = get();
-    	printf("consuming\n");
+    	printf("consuming: %d\n", temp);
     	mutexUnlock(&mutex);
     }
 }
