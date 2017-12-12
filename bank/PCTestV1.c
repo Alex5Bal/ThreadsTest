@@ -35,7 +35,7 @@ void *producer(void *arg)
     	while (count == max)
     		yield();
     	put(i);
-    	printf("producing\n");
+    	printf("producing: %d\n", i);
     	mutexUnlock(&mutex);
     }
 }
