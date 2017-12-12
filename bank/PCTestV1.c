@@ -27,8 +27,6 @@ int get()
     
 }
 
-mutexInit(&mutex, max);
-
 void *producer(void *arg)
 {
     int i;
@@ -57,6 +55,7 @@ int main()
 {
     int numThreads = 5;
     int loopCount = 10;
+    mutexInit(&mutex, max);
     
     makeThreads(numThreads);
     
