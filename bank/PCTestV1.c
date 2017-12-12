@@ -35,6 +35,7 @@ void *producer(void *arg)
     	while (count == max)
     		yield();
     	put(i);
+    	printf("producing\n");
     	mutexUnlock(&mutex);
     }
 }
@@ -47,6 +48,7 @@ void *consumer(void *arg)
     	while (count == 0)
     		yield();
     	int temp = get();
+    	printf("consuming\n");
     	mutexUnlock(&mutex);
     }
 }
